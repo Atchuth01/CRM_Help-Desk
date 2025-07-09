@@ -1,0 +1,40 @@
+<!-- helpdesk/templates/helpdesk/home.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    {% extends 'helpdesk/base.html' %}
+
+    {% block title %}Home{% endblock %}
+
+    {% block content %}
+        <h1 class="mb-4">Welcome to Help Desk</h1>
+
+        {% if user.is_authenticated %}
+            <p>Hello, <strong>{{ user.username }}</strong>!</p>
+
+            <a href="/dashboard/" class="btn btn-primary mb-2">My Tickets</a>
+            <a href="/create-ticket/" class="btn btn-success mb-2">Create Ticket</a>
+
+            {% if user.is_staff %}
+                <a href="/admin-dashboard/" class="btn btn-warning mb-2">Admin Dashboard</a>
+            {% endif %}
+
+            <form method="POST" action="/logout/">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger mt-2">Logout</button>
+            </form>
+        {% else %}
+            <p>You are not logged in.</p>
+            <a href="/login/" class="btn btn-success">Login</a>
+        {% endif %}
+
+
+
+    {% endblock %}
+
+
+</body>
+</html>
